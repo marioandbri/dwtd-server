@@ -22,10 +22,18 @@ router.post("/api/appointments", async (req, res) => {
 			.json({ message: "Some data for the appointment is missing 🤔" });
 		return;
 	}
-	const result = await prisma.appointment.create({
-		data: newAppointment,
-	});
-	res.json({ result });
+	try {
+		const result = await prisma.appointment.create({
+			data: newAppointment,
+		});
+		res.json({ result });
+	} catch (e) {
+		if (e.code === "P2002" && e.meta.target.includes("datetime")) {
+			res.status(400).json({
+				message: "This hour was already scheduled, please select another one",
+			});
+		}
+	}
 });
 
 router.put("/api/appointments/:id", async (req, res) => {
