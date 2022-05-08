@@ -11,11 +11,12 @@ router.get("/api/appointments", async (req, res) => {
 
 router.post("/api/appointments", async (req, res) => {
 	const newAppointment: Appointment = req.body;
+	console.log(newAppointment);
 
 	if (
-		!newAppointment?.datetime ||
-		!newAppointment?.email ||
-		!newAppointment?.name
+		!newAppointment.datetime ||
+		!newAppointment.email ||
+		!newAppointment.name
 	) {
 		res
 			.status(400)
@@ -26,11 +27,15 @@ router.post("/api/appointments", async (req, res) => {
 		const result = await prisma.appointment.create({
 			data: newAppointment,
 		});
-		res.json({ result });
+		res.json({ message: "The appointment was created successfully 👌" });
 	} catch (e) {
 		if (e.code === "P2002" && e.meta.target.includes("datetime")) {
 			res.status(400).json({
 				message: "This hour was already scheduled, please select another one",
+			});
+		} else {
+			res.status(400).json({
+				message: "Something went worng, please try again",
 			});
 		}
 	}
