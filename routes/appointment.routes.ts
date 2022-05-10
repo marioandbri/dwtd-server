@@ -20,7 +20,6 @@ router.get("/api/appointments", async (req, res) => {
 
 router.post("/api/appointments", async (req, res) => {
 	const newAppointment: Appointment = req.body;
-	console.log(newAppointment);
 
 	if (
 		!newAppointment.datetime ||

@@ -10,11 +10,11 @@ const router = Router();
 
 	app.use(
 		cors({
-			origin: "*",
+			origin: process.env.CLIENT,
 		})
 	);
 	app.use(express.json({}));
-	app.use(morgan("dev"));
+	process.env.NODE_ENV === "developemt" && app.use(morgan("dev"));
 
 	router.get("/", (req, res) => {
 		res.send("Server funcionando");
