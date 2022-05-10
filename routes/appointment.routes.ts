@@ -5,8 +5,17 @@ const router = Router();
 const prisma = new PrismaClient();
 
 router.get("/api/appointments", async (req, res) => {
+	const { date } = req.query as { date: string };
 	const appointments = await prisma.appointment.findMany();
-	res.json(appointments);
+	const dayAppointments = appointments.filter((e) =>
+		e.datetime.toISOString().includes(date)
+	);
+	if (Boolean(date)) {
+		res.json(dayAppointments);
+		return;
+	} else {
+		res.json(appointments);
+	}
 });
 
 router.post("/api/appointments", async (req, res) => {
@@ -35,7 +44,7 @@ router.post("/api/appointments", async (req, res) => {
 			});
 		} else {
 			res.status(400).json({
-				message: "Something went worng, please try again",
+				message: "Something went wrong, please try again",
 			});
 		}
 	}
