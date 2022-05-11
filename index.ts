@@ -19,7 +19,7 @@ const router = Router();
 		})
 	);
 	app.use(express.json({}));
-	process.env.NODE_ENV === "developemt" && app.use(morgan("dev"));
+	process.env.NODE_ENV === "development" && app.use(morgan("dev"));
 
 	router.get("/", (req, res) => {
 		res.send("Server funcionando");
