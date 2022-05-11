@@ -18,11 +18,7 @@ export const validateAppointment = (
 			message: "Can't schedule an appointment for the weekend",
 		};
 	}
-	if (
-		appointments.some(
-			(e) => e.email === userData.email || e.name === userData.name
-		)
-	) {
+	if (appointments.some((e) => e.email === userData.email)) {
 		return {
 			valid: false,
 			message: "You already have a scheduled hour to dance with the Death",
