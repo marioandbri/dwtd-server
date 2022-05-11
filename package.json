@@ -5,7 +5,8 @@
 	"license": "MIT",
 	"scripts": {
 		"dev": "nodemon index.ts",
-		"start": "ts-node index.ts"
+		"prisma-generate": "prisma generate",
+		"start": "ts-node --transpile-only index.ts"
 	},
 	"dependencies": {
 		"@prisma/client": "^3.13.0",
